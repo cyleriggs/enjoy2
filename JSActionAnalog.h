@@ -9,6 +9,9 @@
 #import <Cocoa/Cocoa.h>
 @class JSAction;
 
+#define ANALOG_LOW -0.3
+#define ANALOG_HIGH 0.3
+
 @interface JSActionAnalog : JSAction {
 	double offset, scale;
 }

@@ -50,8 +50,11 @@
 	int raw = IOHIDValueGetIntegerValue(value);
     double parsed = [self getRealValue: raw];
 	
-	[[subActions objectAtIndex: 0] setActive: (parsed < -0.3)];
-	[[subActions objectAtIndex: 1] setActive: (parsed > 0.3)];
+    bool isLow = (parsed < ANALOG_LOW);
+    bool isHigh = (parsed > ANALOG_HIGH);
+    
+    [[subActions objectAtIndex: 0] setActive:isLow];
+    [[subActions objectAtIndex: 1] setActive:isHigh];
 }
 
 -(double) getRealValue: (int)value {
