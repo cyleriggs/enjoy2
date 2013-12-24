@@ -102,11 +102,22 @@
 }
 
 -(id) handlerForEvent: (IOHIDValueRef) value {
-	JSAction* mainAction = [self actionForEvent: value];
+    return [self handlerForEvent:value acceptAnalog:YES];
+}
+
+-(id) handlerForEvent: (IOHIDValueRef) value acceptAnalog:(BOOL)acceptAnalogEnabled {
+	JSAction* mainAction = [self actionForEvent:value];
+
 	if(!mainAction)
 		return NULL;
-	return [mainAction findSubActionForValue: value];
+
+    if ([mainAction isKindOfClass: [JSActionAnalog class]]) {
+        return [((JSActionAnalog*)mainAction) findSubActionForValue:value acceptAnalog:acceptAnalogEnabled];
+    }
+    
+    return [mainAction findSubActionForValue:value];
 }
+
 -(JSAction*) actionForEvent: (IOHIDValueRef) value {
 	IOHIDElementRef elt = IOHIDValueGetElement(value);
 	void* cookie = IOHIDElementGetCookie(elt);

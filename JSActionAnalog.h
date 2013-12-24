@@ -18,5 +18,7 @@
 
 - (id) initWithIndex: (int)newIndex;
 -(double) getRealValue: (int) value;
+-(id)findSubActionForValue: (IOHIDValueRef) value acceptAnalog:(BOOL)acceptAnalogEnabled;
+
 
 @end

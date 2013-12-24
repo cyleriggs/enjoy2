@@ -66,12 +66,13 @@ void input_callback(void* inContext, IOReturn inResult, void* inSender, IOHIDVal
 	
 	Joystick* js = [self findJoystickByRef: device];
     ApplicationController *app_controller = [[NSApplication sharedApplication] delegate];
+    JSAction* mainAction = [js actionForEvent: value];
+        
 	if([app_controller active]) {
 		// for reals
-		JSAction* mainAction = [js actionForEvent: value];
 		if(!mainAction)
 			return;
-		
+        
 		[mainAction notifyEvent: value];
 		NSArray* subactions = [mainAction subActions];
 		if(!subactions)
@@ -84,9 +85,19 @@ void input_callback(void* inContext, IOReturn inResult, void* inSender, IOHIDVal
 			/* might be required for some strange actions */
             if ([target running] != [subaction active]) {
                 if ([subaction active]) {
+                    if (mainAction != subaction) {
+                        NSLog(@"triggering for action: %@.%@", [mainAction name], [subaction name]);
+                    } else {
+                        NSLog(@"triggering for action: %@", [subaction name]);
+                    }
                     [target trigger: self];
                 }
                 else {
+                    if (mainAction != subaction) {
+                        NSLog(@"untriggering for action: %@.%@", [mainAction name], [subaction name]);
+                    } else {
+                        NSLog(@"untriggering for action: %@", [subaction name]);
+                    }
                     [target untrigger: self];
                 }
                 [target setRunning: [subaction active]];
@@ -106,10 +117,10 @@ void input_callback(void* inContext, IOReturn inResult, void* inSender, IOHIDVal
 		}
 	} else if([[NSApplication sharedApplication] isActive] && [[[NSApplication sharedApplication]mainWindow]isVisible]) {
 		// joysticks not active, use it to select stuff
-		id handler = [js handlerForEvent: value];
+		id handler = [js handlerForEvent:value acceptAnalog:NO];
 		if(!handler)
 			return;
-	
+        
 		[self expandRecursive: handler];
 		self->programmaticallySelecting = YES;
 		[self->outlineView selectRowIndexes: [NSIndexSet indexSetWithIndex: [self->outlineView rowForItem: handler]] byExtendingSelection: NO];

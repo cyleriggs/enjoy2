@@ -30,6 +30,7 @@
 -(void) populateActions;
 -(void) invalidate;
 -(id) handlerForEvent: (IOHIDValueRef) value;
+-(id) handlerForEvent: (IOHIDValueRef) value acceptAnalog:(BOOL)acceptAnalogEnabled;
 -(id)initWithDevice: (IOHIDDeviceRef) newDevice;
 -(JSAction*) actionForEvent: (IOHIDValueRef) value;
 

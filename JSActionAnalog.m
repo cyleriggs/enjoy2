@@ -23,7 +23,11 @@
 }
 
 -(id) findSubActionForValue: (IOHIDValueRef) value {
-    if ([[subActions objectAtIndex: 2] active]) {
+    return [self findSubActionForValue:value acceptAnalog:NO];
+}
+
+-(id)findSubActionForValue: (IOHIDValueRef) value acceptAnalog:(BOOL)acceptAnalogEnabled {
+    if (acceptAnalogEnabled && [[subActions objectAtIndex: 2] active]) {
         return [subActions objectAtIndex: 2]; // TODO?
     }
     
