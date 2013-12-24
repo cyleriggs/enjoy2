@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
+#define DEAD_ZONE 0.05
+
 #import "TargetMouseMove.h"
 
 @implementation TargetMouseMove
@@ -37,7 +39,7 @@
 
 -(void) update: (JoystickController *)jc {
     //printf("Dir %d inputValue %f\n", [self dir], [self inputValue]);
-    if (fabs([self inputValue]) < 0.01)
+    if (fabs([self inputValue]) < DEAD_ZONE)
         return; // dead zone
     
     NSRect screenRect = [[NSScreen mainScreen] frame];
@@ -67,8 +69,7 @@
         ProcessSerialNumber psn;
         GetFrontProcess(&psn);
         CGEventPostToPSN(&psn, move);
-    }
-    else {
+    } else {
         CGEventPost(kCGHIDEventTap, move);
     }
     
