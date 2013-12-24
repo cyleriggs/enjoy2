@@ -21,6 +21,6 @@
 @property(readwrite, assign) JSAction* base;
 @property(readwrite, copy) NSString* name;
 @property(readwrite) int index;
-@property(readwrite) BOOL active;
+@property(readwrite, nonatomic) BOOL active;
 
 @end

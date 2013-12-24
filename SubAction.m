@@ -22,4 +22,15 @@
 	return [[NSString alloc] initWithFormat: @"%@~%d", [base stringify], index];
 }
 
+-(BOOL) active {
+    return active;
+}
+
+-(void) setActive:(BOOL)newActive {
+    if (active != newActive) {
+        NSLog(@"toggling %@ to state %d", name, newActive);
+        active = newActive;
+    }
+}
+
 @end
