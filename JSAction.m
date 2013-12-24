@@ -19,6 +19,7 @@
 -(void) notifyEvent: (IOHIDValueRef) value {
 	[self doesNotRecognizeSelector:_cmd];
 }
+
 -(BOOL) active {
 	[self doesNotRecognizeSelector:_cmd];
 	return NO;
