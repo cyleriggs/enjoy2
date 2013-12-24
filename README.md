@@ -53,6 +53,12 @@ The files are JSON-encoded and should be portable across machines.
 
 ## Changelog
 
+Version 1.3-cyleriggs
+* PS4 Dualshock Compatibility
+* Dead zone increased from 1% to 5%
+* Fix bug in which config screen bounces between "analog" items
+* Enhanced logging around trigger transitions
+
 Version 1.2
 
 * JSON configuration files
